@@ -1,11 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: prd-apps-da-pipe
-  namespace: argocd-prd
+  name: app-prod-approved
+  namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
       repoURL: https://github.com/luisbianconi/aulao-pipeline.git
@@ -14,17 +12,19 @@ spec:
       - path: prd/*/helm
   template:
     metadata:
-      name: prd-{{index .path.segments 1}}
+      name: 'prod-{{path.basename}}'
     spec:
-      project: "default"
+      project: default
       source:
         repoURL: https://github.com/luisbianconi/aulao-pipeline.git
         targetRevision: HEAD
-        path: '{{.path.path}}'
+        path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{index .path.segments 1}}'
+        namespace: '{{path.basename}}'
       syncPolicy:
-        automated: {}
+        automated:
+          prune: false
+          selfHeal: false
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
