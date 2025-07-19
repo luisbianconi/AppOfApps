@@ -6,26 +6,23 @@ metadata:
 spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - pullRequest:
-      github:
-        owner: luisbianconi
-        repo: aulao-pipeline
-        tokenRef:
-          secretName: github-token
-          key: token
-      requeueAfterSeconds: 60
+  - git:
+      repoURL: https://github.com/luisbianconi/aulao-pipeline.git
+      revision: HEAD
+      branches:
+      - "dev-*"
   template:
     metadata:
-      name: 'dev-{{branch_slug}}-{{number}}'
+      name: '{{branch}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/luisbianconi/aulao-pipeline.git
-        targetRevision: '{{head_sha}}'
+        targetRevision: '{{branch}}'
         path: 'dev/helloworld-docker/helm'
       destination:
         server: https://kubernetes.default.svc
-        namespace: 'dev-{{branch_slug}}-{{number}}'
+        namespace: '{{branch}}'
       syncPolicy:
         automated: {}
         syncOptions:

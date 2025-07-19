@@ -1,27 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: app-prod-approved
+  name: app-prod
   namespace: argocd
 spec:
   generators:
   - git:
       repoURL: https://github.com/luisbianconi/aulao-pipeline.git
       revision: HEAD
-      directories:
-      - path: prd/*/helm
+      branches:
+      - "prd-*"
   template:
     metadata:
-      name: 'prod-{{path.basename}}'
+      name: '{{branch}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/luisbianconi/aulao-pipeline.git
-        targetRevision: HEAD
-        path: '{{path}}'
+        targetRevision: '{{branch}}'
+        path: 'prd/helloworld-docker/helm'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
+        namespace: '{{branch}}'
       syncPolicy:
         automated:
           prune: false
