@@ -19,7 +19,7 @@ spec:
       project: "default"
       source:
         repoURL: https://github.com/luisbianconi/aulao-pipeline.git
-        targetRevision: '{{head_sha}}'
+        targetRevision: HEAD
         path: dev/helloworld-docker/helm
       destination:
         server: https://kubernetes.default.svc
