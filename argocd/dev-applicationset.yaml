@@ -4,25 +4,25 @@ metadata:
   name: app-dev
   namespace: argocd-prd
 spec:
+  goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
       repoURL: https://github.com/luisbianconi/aulao-pipeline.git
       revision: HEAD
-      branches:
-      - "dev-*"
+      branchFilter: "dev-*"
   template:
     metadata:
-      name: '{{branch}}'
+      name: '{{.branch}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/luisbianconi/aulao-pipeline.git
-        targetRevision: '{{branch}}'
+        targetRevision: '{{.branch}}'
         path: 'dev/helloworld-docker/helm'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{branch}}'
+        namespace: '{{.branch}}'
       syncPolicy:
         automated: {}
         syncOptions:
