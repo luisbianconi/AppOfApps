@@ -6,7 +6,6 @@ metadata:
 spec:
   project: 'default'
   source:
-    helm: {}
     repoURL: 'https://github.com/luisbianconi/descomplicando-gitops-no-kubernetes-argocd.git'
     targetRevision: feat/day3
     path: giropops-senhas/helm
