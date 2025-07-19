@@ -18,7 +18,7 @@ spec:
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/luisbianconi/aulao-pipeline
+        repoURL: https://github.com/luisbianconi/aulao-pipeline.git
         targetRevision: '{{head_sha}}'
         path: dev/helloworld-docker/helm
       destination:
