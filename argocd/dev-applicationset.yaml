@@ -5,14 +5,10 @@ metadata:
   namespace: argocd-prd
 spec:
   generators:
-  - git:
-      repoURL: https://github.com/luisbianconi/aulao-pipeline.git
-      revision: HEAD
-      files:
-      - path: "dev/helloworld-docker/helm/Chart.yaml"
-      branches:
-      - "dev-*"
-      branchLimit: 1
+  - list:
+      elements:
+      - env: development
+        branch: dev-latest
   template:
     metadata:
       name: 'development'
