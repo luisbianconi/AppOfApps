@@ -1,29 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: dev-apps-da-pipe
+  name: app-dev
   namespace: argocd-prd
 spec:
-  goTemplate: true
+#  goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: https://github.com/luisbianconi/aulao-pipeline.git
-      revision: HEAD
-      directories:
-      - path: dev/*/helm
+  - pullRequest:
+      github: 
+        owner: luisbianconi
+        repo: aulao-pipeline
+      requeueAfterSeconds: 60
   template:
     metadata:
-      name: dev-{{index .path.segments 1}}
+      name: 'app-dev-{{branch_slug}}-{{number}}'
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/luisbianconi/aulao-pipeline.git
-        targetRevision: HEAD
-        path: '{{.path.path}}'
+        repoURL: https://github.com/luisbianconi/aulao-pipeline
+        targetRevision: '{{head_sha}}'
+        path: dev/helloworld-docker/helm
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{index .path.segments 1}}'
+        namespace: 'app-do-dev-{{branch_slug}}-{{number}}'
       syncPolicy:
         automated: {}
         syncOptions:
