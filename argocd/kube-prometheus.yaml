@@ -10,7 +10,7 @@ spec:
       - env: production
   template:
     metadata:
-      name: 'production'
+      name: 'monitoring'
     spec:
       project: default
       source:
