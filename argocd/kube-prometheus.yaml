@@ -14,7 +14,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/infrastructure.git
+        repoURL: https://github.com/luisbianconi/infrastructure.git
         targetRevision: 'main'
         path: 'monitoring/kube-prometheus'
       destination:
