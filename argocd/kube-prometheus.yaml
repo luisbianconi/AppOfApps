@@ -14,9 +14,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/prometheus-community/helm-charts.git
+        repoURL: https://github.com/infrastructure.git
         targetRevision: 'main'
-        path: 'charts/kube-prometheus-stack'
+        path: 'monitoring/kube-prometheus'
       destination:
         server: https://kubernetes.default.svc
         namespace: 'monitoring'
