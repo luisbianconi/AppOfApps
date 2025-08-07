@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: app-prod
+  name: monitoring-kube-prometheus
   namespace: argocd-prd
 spec:
   generators:
