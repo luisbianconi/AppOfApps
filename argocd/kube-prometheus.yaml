@@ -2,12 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: monitoring-appofapps
-  namespace: argocd
+  namespace: argocd-prd
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: argocd-prd
   sources:
     - repoURL: https://github.com/luisbianconi/infrastructure.git
       targetRevision: main
