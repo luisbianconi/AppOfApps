@@ -1,23 +1,42 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring-appofapps
+  name: monitoring-crds
   namespace: argocd-prd
 spec:
   project: default
+  source:
+    repoURL: https://github.com/luisbianconi/infrastructure.git
+    targetRevision: main
+    path: monitoring/applications
+    directory:
+      include: 10-monitoring-crds.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-prd
-  sources:
-    - repoURL: https://github.com/luisbianconi/infrastructure.git
-      targetRevision: main
-      path: infrastructure/monitoring/applications/10-monitoring-crds.yaml
-    - repoURL: https://github.com/luisbianconi/infrastructure.git
-      targetRevision: main
-      path: infrastructure/monitoring/applications/20-monitoring-stack.yaml
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-stack
+  namespace: argocd-prd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/luisbianconi/infrastructure.git
+    targetRevision: main
+    path: monitoring/applications
+    directory:
+      include: 20-monitoring-stack.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd-prd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
